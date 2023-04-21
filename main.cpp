@@ -22,6 +22,10 @@ void process_input(GLFWwindow *window) {
 int main(void) {
     // Yaml configuration file specs
     YAML::Node config = YAML::LoadFile("config.yml");
+    if (!(config["window"]["dimentions"]["width"] && config["window"]["dimentions"]["height"])) {
+	std::cerr << "err. incomplete window dimentions config...\n";
+	return 1;
+    }
     const int window_width = config["window"]["dimentions"]["width"].as<int>();
     const int window_height = config["window"]["dimentions"]["height"].as<int>();
 
