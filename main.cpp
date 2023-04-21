@@ -9,15 +9,9 @@
 
 #define WINDOW_HEADNAME "IGE - Invalid Game Engine"
 
-void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
-    glViewport(0, 0, width, height);
-}
-
-void process_input(GLFWwindow *window) {
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-        glfwSetWindowShouldClose(window, true);
-    }
-}
+void framebuffer_size_callback(GLFWwindow *window, int width, int height);
+void process_input(GLFWwindow *window);
+void render_scene();
 
 int main(void) {
     // Yaml configuration file specs
@@ -61,10 +55,27 @@ int main(void) {
     // Window loop
     while (!glfwWindowShouldClose(window)) {
 	process_input(window);
+	render_scene();
 
 	glfwSwapBuffers(window);
 	glfwPollEvents();
     }
     glfwTerminate();
     return 0;
+}
+
+void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
+    glViewport(0, 0, width, height);
+}
+
+void process_input(GLFWwindow *window) {
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+        glfwSetWindowShouldClose(window, true);
+    }
+}
+
+void render_scene() {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClearColor(0.0, 0.0, 0.0, 1.0); // Clearing with black
+    
 }

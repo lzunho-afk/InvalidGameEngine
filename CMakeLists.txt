@@ -12,6 +12,7 @@ set(CMAKE_VERBOSE_MAKEFILE 1)
 
 set(SOURCES
   "${PROJECT_SOURCE_DIR}/main.cpp"
+  "${PROJECT_SOURCE_DIR}/mesh.cpp"
 )
 
 # glfw
@@ -38,6 +39,10 @@ if (APPLE)
     SET(EXTRA_LIBS ${COCOA_LIBRARY} ${OpenGL_LIBRARY} ${IOKIT_LIBRARY} ${COREVIDEO_LIBRARY})
 endif (APPLE)
 
+# GLM
+find_package(glm REQUIRED)
+include_directories(${GLM_INCLUDE_DIRS})
+
 # yaml-cpp 
 find_package(yaml-cpp REQUIRED)
 include_directories(${YAML_CPP_INCLUDE_DIRS})
@@ -63,5 +68,6 @@ target_link_libraries(invalidengine
   glfw
   ${OPENGL_LIBRARIES}
   ${GLEW_LIBRARIES}
+  ${GLM_LIBRARIES}
   ${YAML_CPP_LIBRARIES}
 )
