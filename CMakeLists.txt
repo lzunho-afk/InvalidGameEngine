@@ -14,6 +14,8 @@ set(SOURCES
   "${PROJECT_SOURCE_DIR}/main.cpp"
   "${PROJECT_SOURCE_DIR}/mesh.cpp"
   "${PROJECT_SOURCE_DIR}/camera.cpp"
+  "${PROJECT_SOURCE_DIR}/shader_loader.cpp"
+  "${PROJECT_SOURCE_DIR}/light_renderer.cpp"
 )
 
 # glfw
