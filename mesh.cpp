@@ -1,6 +1,7 @@
 #include "mesh.hpp"
 
-void Mesh::set_triangle_data(std::vector<Vertex>& vtxs, std::vector<uint32_t>& idxs) {
+void Mesh::set_triangle_data(std::vector<Vertex>& vtxs, std::vector<uint32_t>& idxs)
+{
     std::vector<Vertex> _vtxs = {
 	{
 	    { 0.0f, -1.0f, 0.0f }, // Position
@@ -32,14 +33,17 @@ void Mesh::set_triangle_data(std::vector<Vertex>& vtxs, std::vector<uint32_t>& i
     idxs = _idxs;
 }
 
-void Mesh::set_quad_data(std::vector<Vertex>& vtxs, std::vector<uint32_t>& idxs) {
+void Mesh::set_quad_data(std::vector<Vertex>& vtxs, std::vector<uint32_t>& idxs)
+{
     
 }
 
-void Mesh::set_cube_data(std::vector<Vertex>& vtxs, std::vector<uint32_t>& idxs) {
+void Mesh::set_cube_data(std::vector<Vertex>& vtxs, std::vector<uint32_t>& idxs)
+{
     
 }
 
-void Mesh::set_sphere_data(std::vector<Vertex>& vtxs, std::vector<uint32_t>& idxs) {
+void Mesh::set_sphere_data(std::vector<Vertex>& vtxs, std::vector<uint32_t>& idxs)
+{
     
 }

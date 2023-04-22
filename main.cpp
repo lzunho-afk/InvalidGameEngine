@@ -13,7 +13,8 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void process_input(GLFWwindow *window);
 void render_scene();
 
-int main(void) {
+int main(void)
+{
     // Yaml configuration file specs
     YAML::Node config = YAML::LoadFile("config.yml");
     if (!(config["window"]["dimentions"]["width"] && config["window"]["dimentions"]["height"])) {
@@ -64,18 +65,20 @@ int main(void) {
     return 0;
 }
 
-void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
+void framebuffer_size_callback(GLFWwindow *window, int width, int height)
+{
     glViewport(0, 0, width, height);
 }
 
-void process_input(GLFWwindow *window) {
+void process_input(GLFWwindow *window)
+{
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, true);
     }
 }
 
-void render_scene() {
+void render_scene()
+{
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glClearColor(0.0, 0.0, 0.0, 1.0); // Clearing with black
-    
+    glClearColor(0.0, 0.0, 0.0, 1.0); // Clearing with black    
 }
