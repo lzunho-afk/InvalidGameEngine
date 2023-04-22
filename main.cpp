@@ -3,8 +3,12 @@
 
 #include <iostream>
 #include <string>
+#include <yaml-cpp/yaml.h>
 
-#include "yaml-cpp/yaml.h"
+#include "shader_loader.hpp"
+#include "camera.hpp"
+#include "light_renderer.hpp"
+
 #include "version.h"
 
 #define WINDOW_HEADNAME "IGE - Invalid Game Engine"
@@ -12,6 +16,7 @@
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void process_input(GLFWwindow *window);
 void render_scene();
+void init_game();
 
 int main(void)
 {
@@ -24,6 +29,10 @@ int main(void)
     const int window_width = config["window"]["dimentions"]["width"].as<int>();
     const int window_height = config["window"]["dimentions"]["height"].as<int>();
 
+    Camera *camera;
+    LightRenderer *light;
+
+    // GLFW initialization
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, OPENGL_VERSION_MAJOR);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, OPENGL_VERSION_MINOR);
@@ -81,4 +90,13 @@ void render_scene()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0.0, 0.0, 0.0, 1.0); // Clearing with black    
+}
+
+void init_game()
+{
+    // enabling depth testing (draw just front pixels)
+    glEnable(GL_DEPTH_TEST);
+
+    ShaderLoader shader;
+    GLuint flat_shader_program = shader.create_program("assets/shaders/flat_model.vs", "assets/shaders/flat_model.fs");
 }
