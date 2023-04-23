@@ -15,8 +15,6 @@
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void process_input(GLFWwindow *window);
-void render_scene();
-void init_game();
 
 int main(void)
 {
@@ -28,9 +26,6 @@ int main(void)
     }
     const int window_width = config["window"]["dimentions"]["width"].as<int>();
     const int window_height = config["window"]["dimentions"]["height"].as<int>();
-
-    Camera *camera;
-    LightRenderer *light;
 
     // GLFW initialization
     glfwInit();
@@ -62,15 +57,40 @@ int main(void)
     glViewport(0, 0, window_width, window_height);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
+    /* Game init */
+    
+    Camera *camera;
+    LightRenderer *light;
+    
+    // enabling depth testing (draw just front pixels)
+    glEnable(GL_DEPTH_TEST);
+
+    // Loading shaders
+    ShaderLoader shader;
+    GLuint flat_shader_program = shader.create_program("assets/shaders/flat_model.vs", "assets/shaders/flat_model.fs");
+
+    camera = new Camera(45.0f, 800, 600, 0.1f, 100.0f, glm::vec3(0.0f, 4.0f, 6.0f));
+    light = new LightRenderer(MeshType::kTriangle, camera);
+    light->set_program(flat_shader_program);
+    light->set_position(glm::vec3(0.0f, 0.0f, 0.0f));
+    
+    /* End Game init */
+    
     // Window loop
     while (!glfwWindowShouldClose(window)) {
 	process_input(window);
-	render_scene();
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.0, 0.0, 0.0, 1.0); // Clearing with black
+	light->draw();
 
 	glfwSwapBuffers(window);
 	glfwPollEvents();
     }
     glfwTerminate();
+
+    delete camera;
+    delete light;
     return 0;
 }
 
@@ -86,17 +106,3 @@ void process_input(GLFWwindow *window)
     }
 }
 
-void render_scene()
-{
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glClearColor(0.0, 0.0, 0.0, 1.0); // Clearing with black    
-}
-
-void init_game()
-{
-    // enabling depth testing (draw just front pixels)
-    glEnable(GL_DEPTH_TEST);
-
-    ShaderLoader shader;
-    GLuint flat_shader_program = shader.create_program("assets/shaders/flat_model.vs", "assets/shaders/flat_model.fs");
-}

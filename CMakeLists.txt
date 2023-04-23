@@ -8,14 +8,23 @@ project("invalid_game_engine"
 )
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_VERBOSE_MAKEFILE 1)
+#set(CMAKE_VERBOSE_MAKEFILE 1)
 
+# Sourcefiles
 set(SOURCES
   "${PROJECT_SOURCE_DIR}/main.cpp"
-  "${PROJECT_SOURCE_DIR}/mesh.cpp"
   "${PROJECT_SOURCE_DIR}/camera.cpp"
-  "${PROJECT_SOURCE_DIR}/shader_loader.cpp"
+  "${PROJECT_SOURCE_DIR}/mesh.cpp"
   "${PROJECT_SOURCE_DIR}/light_renderer.cpp"
+  "${PROJECT_SOURCE_DIR}/shader_loader.cpp"
+)
+
+# Headerfiles
+set(HEADERS
+  "${PROJECT_SOURCE_DIR}/camera.hpp"
+  "${PROJECT_SOURCE_DIR}/mesh.hpp"
+  "${PROJECT_SOURCE_DIR}/light_renderer.hpp"
+  "${PROJECT_SOURCE_DIR}/shader_loader.hpp"
 )
 
 # glfw
@@ -63,8 +72,17 @@ configure_file (
 )
 
 # targets
-add_executable(invalidengine ${SOURCES})
+add_executable(invalidengine ${HEADERS} ${SOURCES})
 target_include_directories(invalidengine PUBLIC ${PROJECT_BINARY_DIR}/include)
+
+add_custom_target(copy_assets ALL
+  COMMAND ${CMAKE_COMMAND} -E copy_directory
+  ${PROJECT_SOURCE_DIR}/assets
+  ${PROJECT_BINARY_DIR}/assets
+  COMMENT "Copying engine assets into binary directory"
+)
+
+add_dependencies(invalidengine copy_assets)
 
 # linking
 target_link_libraries(invalidengine
